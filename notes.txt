@@ -1,1 +1,4 @@
 express ejs nodemon mongoose
+
+File -Seed.js
+      For storing initial data
