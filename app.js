@@ -22,9 +22,26 @@ app.use(express.static(path.join(__dirname,"public")));
 // SEEDING THE DATABASE
 // seedDB();  
 
-app.get("/",(req,res)=>{
-    res.send("Welcome to Ecommerce Home Page");
+app.get("/", (req, res) => {
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Ecommerce Home</title>
+            <link rel="stylesheet" href="/styles.css"> <!-- Link to the CSS file -->
+        </head>
+        <body>
+            <div class="container">
+                <h1>Ecommerce Home</h1>
+                <p>See All Products: <a href="/products">Products</a></p>
+            </div>
+        </body>
+        </html>
+    `);
 });
+
 
 app.use(productRoutes);
 
