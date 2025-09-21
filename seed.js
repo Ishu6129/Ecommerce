@@ -32,11 +32,6 @@ const products = [
         price:100000,
         description:"Lightweight and powerful laptop with M1 chip for everyday tasks"
     },
-    {
-        name:"Elixer",
-        price:0,
-        description:"A refreshing drink to energize your day"
-    }
 ];
 
 async function seedDB(){

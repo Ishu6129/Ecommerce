@@ -1,0 +1,23 @@
+<% title = "All Products" %>
+<% layout('layouts/boilerplate') -%>
+<%- include('../partials/navbar') %>
+
+<div class="row">
+        <div class="col-lg-6 mt-3 ">
+           <div class="card mx-auto" style="width: 18rem; box-shadow: 0 5px 0px black">
+                <img class="card-img-top" src="<%=product.image%>" alt="">
+                <div class="card-body">
+                    <h5 class="card-title"><%=product.name%></h5>
+                    <h5 class="card-title"><%=product.price%></h5>
+                    <p class="card-text"><%=product.description%></p>
+                    <a href="#" class="btn btn-secondary">Add to Cart</a>
+                    <a href="#" class="btn btn-success">Buy</a>
+                    <a href="/product/<%=product._id%>/edit" class="btn btn-warning">Edit</a>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mt-3">
+            <h1 class="display-5">Leave A Review Here</h1>
+        </div>  
+</div>

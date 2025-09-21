@@ -1,4 +1,4 @@
-express ejs nodemon mongoose
+express ejs nodemon mongoose ejs-mate method-override
 
 File -Seed.js
       For storing initial data
