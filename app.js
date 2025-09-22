@@ -4,7 +4,7 @@ const mongoose=require("mongoose");
 const path=require("path");
 const seedDB = require("./seed");
 const productRoutes = require("./routes/products");
-const Product = require("./models/Product");
+const reviewRoutes = require("./routes/reviews");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 
@@ -29,7 +29,7 @@ app.use(methodOverride('_method'));
 
 
 // SEEDING THE DATABASE
-//seedDB();  
+// seedDB();  
 
 app.get("/", (req, res) => {
     res.send(`
@@ -53,6 +53,7 @@ app.get("/", (req, res) => {
 
 
 app.use(productRoutes);
+app.use(reviewRoutes);
 
 app.listen(3000,()=>{
     console.log(`Server started at port 3000\n http://localhost:3000`);  

@@ -22,7 +22,7 @@ router.post('/products', async (req, res) => {
 
 router.get('/product/:id', async (req, res) => {
     let {id} = req.params;
-    let product = await Product.findById(id);
+    let product = await Product.findById(id).populate('reviews');
     res.render('products/show', { product });
 });
 
@@ -41,6 +41,10 @@ router.patch('/products/:id', async (req, res) => {
 
 router.delete('/products/:id', async (req, res) => {
     let {id} = req.params;
+    const product =await Product.findById(id);
+    for (let review of product.reviews) {
+        await Review.findByIdAndDelete(review);
+    }
     await Product.findByIdAndDelete(id);
     res.redirect('/products');
 });
