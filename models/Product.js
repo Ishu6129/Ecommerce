@@ -1,4 +1,5 @@
 const mongoose=require("mongoose");
+const Review = require("./Review");
 
 const productSchema=new mongoose.Schema({
     name:{
@@ -27,6 +28,14 @@ const productSchema=new mongoose.Schema({
         }
     ]
 });
+
+// middleware operation bts when method called on model
+productSchema.post('findOneAndDelete',async function(product){
+    if(product.reviews.length>0){
+       await Review.deleteMany({_id:{$in:product.reviews}});
+    }
+});
+
 
 let Product =mongoose.model("Product",productSchema);
 module.exports=Product;
