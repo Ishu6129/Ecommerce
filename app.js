@@ -67,6 +67,6 @@ app.get("/", (req, res) => {
 app.use(productRoutes);
 app.use(reviewRoutes);
 
-app.listen(3000,()=>{
-    console.log(`Server started at port 3000\n http://localhost:3000`);  
+app.listen(process.env.PORT,()=>{
+    console.log(`Server started at port 3000\n http://localhost:${process.env.PORT}`);  
 })
