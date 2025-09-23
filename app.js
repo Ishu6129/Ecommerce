@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
         <h1>Ecommerce Home</h1>
         <p>See All Products: <a href="/products">Products</a></p>
       </div>
-      <footer class="footer">
+      <footer style="position:fixed; bottom:10px; right:15px; color:grey; font-size:14px;">
         Made by Ishu Agrawal
       </footer>
     </body>
