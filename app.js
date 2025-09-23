@@ -40,16 +40,30 @@ app.get("/", (req, res) => {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Ecommerce Home</title>
             <link rel="stylesheet" href="/styles.css"> <!-- Link to the CSS file -->
+            <style>
+                .footer {
+                    position: fixed;
+                    bottom: 5px;
+                    right: 10px;
+                    font-size: 12px;
+                    color: gray;
+                }
+            </style>
         </head>
         <body>
             <div class="container">
                 <h1>Ecommerce Home</h1>
                 <p>See All Products: <a href="/products">Products</a></p>
             </div>
+            
+            <footer class="footer">
+                Made by Ishu Agrawal
+            </footer>
         </body>
         </html>
     `);
 });
+
 
 
 app.use(productRoutes);
