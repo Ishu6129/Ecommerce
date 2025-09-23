@@ -7,12 +7,10 @@ const productRoutes = require("./routes/products");
 const reviewRoutes = require("./routes/reviews");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
-
-
-
+require('dotenv').config();
 
 // MONGOOSE CONNECTION
-mongoose.connect("mongodb://localhost:27017/ecommerce")
+mongoose.connect(process.env.DB_URL)
 .then(()=>{
     console.log("Mongodb connected Successfully✅");
 }).catch((err)=>{
