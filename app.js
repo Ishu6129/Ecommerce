@@ -9,14 +9,19 @@ const methodOverride = require("method-override");
 require('dotenv').config();
 
 // MONGOOSE CONNECTION
-mongoose.connect(process.env.DB_URL)
-  .then(() => {
-    console.log("Mongodb connected Successfully✅");
-  })
-  .catch((err) => {
-    console.log("Mongodb connection error");    
-    console.log(err);
-  });
+try {
+  mongoose.connect(process.env.DB_URL)
+    .then(() => {
+      console.log("Mongodb connected Successfully✅");
+    })
+    .catch((err) => {
+      console.log("Mongodb connection error");    
+      console.log(err);
+    });}
+  catch(e){
+      console.log("Some error occured");
+      console.log(e);
+}
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");   
@@ -37,7 +42,7 @@ app.get("/", (req, res) => {
     </head>
     <body>
       <div class="container">
-        <h1>Ecommerce Home</h1>
+        <h1>Home</h1>
         <p>See All Products: <a href="/products">Products</a></p>
       </div>
       <footer style="position:fixed; bottom:10px; right:15px; color:grey; font-size:14px;">
@@ -50,12 +55,6 @@ app.get("/", (req, res) => {
 
 app.use(productRoutes);
 app.use(reviewRoutes);
-
-// Error handling middleware to catch async route errors and more
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send(`Something went wrong! ${err.message}`);
-});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

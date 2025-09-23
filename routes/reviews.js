@@ -4,6 +4,7 @@ const Review = require('../models/Review');
 const Product = require('../models/Product');
 
 router.post("/product/:id/reviews", async (req, res) => {
+    try{
     let { id } = req.params;
     let {rating, comment } = req.body;
     const product = await Product.findById(id);
@@ -11,7 +12,10 @@ router.post("/product/:id/reviews", async (req, res) => {
     product.reviews.push(review);
     await review.save();
     await product.save();
-    res.redirect(`/product/${id}`);
+    res.redirect(`/product/${id}`);}
+    catch(e){
+        res.status(500).render('products/error', {error: e.message});
+    }
 });
 
 module.exports = router;

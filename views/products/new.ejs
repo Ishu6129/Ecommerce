@@ -6,22 +6,46 @@
     <div class="row">
         <h1 class="display-4 text-center mb-4">Add New Product</h1>
         <div class="col-md-6 mx-auto">
-            <form action="/products" method="POST">
+            <form action="/products" method="POST" class="needs-validation" novalidate>
                 <div class="mb-3">
                     <label for="name" class="form-label">Product Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please provide a product name.
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="price" class="form-label">Price</label>
-                    <input type="text" class="form-control" id="price" name="price" placeholder="Enter product price">
+                    <input type="text" class="form-control" id="price" name="price" placeholder="Enter product price" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please provide a product price.
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Image URL</label>
-                    <input type="text" class="form-control" id="image" name="image" placeholder="Enter image URL">
+                    <input type="text" class="form-control" id="image" name="image" placeholder="Enter image URL" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please provide an image URL.
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter Description of product"></textarea>
+                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter Description of product" required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please provide a product description.
+                    </div>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Add Item</button>
@@ -31,3 +55,26 @@
         </div>
     </div>
 </div>
+
+
+<script >
+    (() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+
+</script>
