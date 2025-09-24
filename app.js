@@ -6,6 +6,7 @@ const productRoutes = require("./routes/products");
 const reviewRoutes = require("./routes/reviews");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
+const seedDB = require("./seed");
 require('dotenv').config();
 
 // MONGOOSE CONNECTION
@@ -53,8 +54,13 @@ app.get("/", (req, res) => {
   `);
 });
 
+// seedDB(); // Seed the database with initial data
+// seedDB();
+
 app.use(productRoutes);
 app.use(reviewRoutes);
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
