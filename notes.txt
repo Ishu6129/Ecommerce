@@ -1,4 +1,16 @@
-express ejs nodemon mongoose ejs-mate method-override joi
+Libraries:
+      express ejs nodemon mongoose ejs-mate method-override joi cookie-parser
 
-File -Seed.js
+Dummy Data-Seed.js
       For storing initial data
+
+Cookies: 
+      client side storage {key:value}
+      uses : session management,tracking,personalization
+      they are stateful
+      Disadvantage: 
+            Not secure but signed cookies are secure
+      Signed Cookie : 
+
+Session:
+      Server side storage

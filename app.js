@@ -54,7 +54,7 @@ app.get("/", (req, res) => {
   `);
 });
 
-// seedDB(); // Seed the database with initial data
+// Seed the database with initial data
 // seedDB();
 
 app.use(productRoutes);

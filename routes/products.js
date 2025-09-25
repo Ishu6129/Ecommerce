@@ -4,7 +4,7 @@ const Product = require('../models/Product');
 const Review = require('../models/Review');
 const {validateProduct} = require('../middleware');
 
-
+// All the routes related to products
 router.get('/products', async (req, res) => {
     try{
         let products = await Product.find({});
@@ -15,6 +15,7 @@ router.get('/products', async (req, res) => {
     }
 });
 
+// Form to create new product
 router.get('/product/new', async (req, res) => {
     try{
         res.render('products/new');
@@ -24,6 +25,7 @@ router.get('/product/new', async (req, res) => {
     }
 });
 
+// Create new product
 router.post('/products',validateProduct, async (req, res) => {
     try{
         let {name,price,image,description} = req.body;
@@ -35,7 +37,7 @@ router.post('/products',validateProduct, async (req, res) => {
     }
 });
 
-
+// Show particular product
 router.get('/product/:id', async (req, res) => {
     try{
         let {id} = req.params;
@@ -47,6 +49,7 @@ router.get('/product/:id', async (req, res) => {
     }
 });
 
+// Form to edit product
 router.get('/product/:id/edit', async (req, res) => {
     try{
         let {id} = req.params;
@@ -58,6 +61,7 @@ router.get('/product/:id/edit', async (req, res) => {
     }
 });
 
+// Edit particular product
 router.patch('/products/:id',validateProduct ,async (req, res) => {
     try{
         let {id} = req.params;
@@ -70,6 +74,7 @@ router.patch('/products/:id',validateProduct ,async (req, res) => {
     }
 });
 
+// Delete particular product
 router.delete('/products/:id', async (req, res) => {
     try{
         let {id} = req.params;
