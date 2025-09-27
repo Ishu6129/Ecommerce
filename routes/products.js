@@ -8,7 +8,7 @@ const {validateProduct} = require('../middleware');
 router.get('/products', async (req, res) => {
     try{
         let products = await Product.find({});
-        res.render('products/index', { products });
+        res.render('products/index', { products});
     }
     catch(e){
         res.status(500).render('products/error', {error: e.message});
@@ -30,6 +30,7 @@ router.post('/products',validateProduct, async (req, res) => {
     try{
         let {name,price,image,description} = req.body;
         await Product.create({name,price,image,description} );
+        req.flash("success","product added sucessfully")
         res.redirect('/products');
     }
     catch(e){
@@ -42,7 +43,7 @@ router.get('/product/:id', async (req, res) => {
     try{
         let {id} = req.params;
         let product = await Product.findById(id).populate('reviews');
-        res.render('products/show', { product });
+        res.render('products/show', { product});
     }
     catch(e){
         res.status(500).render('products/error', {error: e.message});
@@ -67,6 +68,7 @@ router.patch('/products/:id',validateProduct ,async (req, res) => {
         let {id} = req.params;
         let {name,price,image,description} = req.body;
         await Product.findByIdAndUpdate(id, {name,price,image,description});
+        req.flash('success', 'Product Updated Successfully');
         res.redirect(`/product/${id}`);
 }
     catch(e){
@@ -83,6 +85,7 @@ router.delete('/products/:id', async (req, res) => {
         //     await Review.findByIdAndDelete(review);
         // }
         await Product.findByIdAndDelete(id);
+        req.flash('ono', 'Product Deleted Successfully');
     res.redirect('/products');
 }
     catch(e){

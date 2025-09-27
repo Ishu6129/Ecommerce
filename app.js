@@ -8,6 +8,10 @@ const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const seedDB = require("./seed");
 require('dotenv').config();
+const session = require('express-session');
+const flash = require('connect-flash');
+
+
 
 // MONGOOSE CONNECTION
 try {
@@ -24,12 +28,30 @@ try {
       console.log(e);
 }
 
+let configSession=session({
+  secret:"thisshould",
+  resave:false,
+  saveUninitialized:true,
+  // cookie:{secure:true}
+});
+
 app.engine("ejs", ejsMate);
+
 app.set("view engine", "ejs");   
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
+
 app.use(methodOverride('_method'));
+
+
+app.use(configSession);
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.ono = req.flash("ono");
+  next();
+});
 
 app.get("/", (req, res) => {
   res.send(`

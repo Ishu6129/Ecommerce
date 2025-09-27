@@ -1,6 +1,5 @@
 Libraries:
-      express ejs nodemon mongoose ejs-mate method-override joi cookie-parser
-
+      express ejs nodemon mongoose ejs-mate method-override joi cookie-parser express-session connect-flash
 Dummy Data-Seed.js
       For storing initial data
 
@@ -13,4 +12,10 @@ Cookies:
       Signed Cookie : 
 
 Session:
+      Stores a {key:value} pair
       Server side storage
+      
+In cookie we have session id and stored server side
+every request cookies are forwarded in which important info is carried
+
+Locals : If we have to repeat again and again so we store in it and can directly access anywhere

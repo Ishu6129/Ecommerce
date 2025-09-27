@@ -13,6 +13,7 @@ router.post("/product/:id/reviews",validateReview, async (req, res) => {
         product.reviews.push(review);
         await review.save();
         await product.save();
+        req.flash('success', 'Review Added Successfully');
         res.redirect(`/product/${id}`);
 }
     catch(e){
