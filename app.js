@@ -92,11 +92,6 @@ app.get("/", (req, res) => {
 });
 
 
-//passport
-passport.use(new LocalStrategy(User.authenticate()));
-
-
-
 // Seed the database with initial data
 // seedDB();
 
