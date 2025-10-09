@@ -86,8 +86,8 @@ router.delete('/products/:id', async (req, res) => {
         // }
         await Product.findByIdAndDelete(id);
         req.flash('ono', 'Product Deleted Successfully');
-    res.redirect('/products');
-}
+        res.redirect('/products');
+    }
     catch(e){
         res.status(500).render('products/error', {error: e.message});
     }

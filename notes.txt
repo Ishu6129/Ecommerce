@@ -1,5 +1,6 @@
 Libraries:
-      express ejs nodemon mongoose ejs-mate method-override joi cookie-parser express-session connect-flash
+      express ejs nodemon mongoose ejs-mate method-override joi cookie-parser express-session connect-flash passport-local
+
 Dummy Data-Seed.js
       For storing initial data
 
@@ -14,8 +15,18 @@ Cookies:
 Session:
       Stores a {key:value} pair
       Server side storage
+
+flash :
+      set the flash or make request 
+      redirect to page (message servive for one redirect and persist in session until next request)
+      read and clear request using middleware
+      render flash
       
 In cookie we have session id and stored server side
 every request cookies are forwarded in which important info is carried
 
 Locals : If we have to repeat again and again so we store in it and can directly access anywhere
+
+passport hashing 
+      use Strategy : passport-local
+      technique - passport-local-mongoose (for hashing)
