@@ -2,15 +2,23 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
-const productRoutes = require("./routes/products");
-const reviewRoutes = require("./routes/reviews");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const seedDB = require("./seed");
 require('dotenv').config();
+
 const session = require('express-session');
 const flash = require('connect-flash');
 
+const passport =require('passport')
+const LocalStrategy=require('passport-local')
+const User=require('./models/user')
+
+
+
+const productRoutes = require("./routes/products");
+const reviewRoutes = require("./routes/reviews");
+const authRoutes=require("./routes/auth")
 
 
 // MONGOOSE CONNECTION
@@ -53,6 +61,13 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(passport.initialize()); // for using paassport feature
+app.use(passport.session()); // for local storage
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 app.get("/", (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -76,15 +91,21 @@ app.get("/", (req, res) => {
   `);
 });
 
+
+//passport
+passport.use(new LocalStrategy(User.authenticate()));
+
+
+
 // Seed the database with initial data
 // seedDB();
 
 app.use(productRoutes);
 app.use(reviewRoutes);
-
+app.use(authRoutes);
 
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server started at port ${PORT}`);
+  console.log(`Server started at port http://localhost:${PORT}`);
 });

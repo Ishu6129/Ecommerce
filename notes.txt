@@ -1,5 +1,6 @@
 Libraries:
-      express ejs nodemon mongoose ejs-mate method-override joi cookie-parser express-session connect-flash passport-local
+      express ejs nodemon mongoose ejs-mate method-override joi cookie-parser express-session connect-flash passport passport-local
+      passport-local-mongoose
 
 Dummy Data-Seed.js
       For storing initial data
@@ -28,5 +29,7 @@ every request cookies are forwarded in which important info is carried
 Locals : If we have to repeat again and again so we store in it and can directly access anywhere
 
 passport hashing 
-      use Strategy : passport-local
-      technique - passport-local-mongoose (for hashing)
+      Strategy used : passport-local
+      technique used - passport-local-mongoose (for hashing)
+
+Static Methods - directly apply on scchema
