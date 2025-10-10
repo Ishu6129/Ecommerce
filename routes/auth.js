@@ -1,17 +1,56 @@
 const express = require('express');
 const router = express.Router();
-const User=require('../models/user')
+const User = require('../models/user');
+const passport = require('passport');
 
-
-router.get('/register',(req,res)=>{
-    res.render("auth/signup")
-})
-
-router.post('/register',async(req,res)=>{
-    let {email,username,password} = req.body;
-    const user=new User({email,username});
-    const newuser=await User.register(user,password);
-    res.send(newuser);
+// REGISTER
+router.get('/register', (req, res) => {
+  res.render('auth/signup');
 });
 
-module.exports = router; 
+router.post('/register', async (req, res, next) => {
+  try {
+    const { email, username, password } = req.body;
+    const user = new User({ email, username });
+    const newUser = await User.register(user, password);
+    req.login(newUser, (err) => {
+      if (err) return next(err);
+      req.flash('success', 'Welcome!');
+      res.redirect('/products');
+    });
+  } catch (e) {
+    req.flash('ono', e.message);
+    res.redirect('/register');
+  }
+});
+
+// LOGIN
+router.get('/login', (req, res) => {
+  res.render('auth/login');
+});
+
+router.post(
+  '/login',
+  passport.authenticate('local', {
+    failureRedirect: '/login',
+    failureFlash: true,
+  }),
+  (req, res) => {
+    req.flash('success', 'Welcome back!');
+    res.redirect('/products');
+  }
+);
+
+// LOGOUT
+router.get('/logout', (req, res, next) => {
+  try {
+    ()=>{ req.logOut(); }
+    req.flash("success","Logged Out Successfully!");
+    res.redirect("/login");
+  } catch (e) {
+    req.flash('ono', e.message);
+    res.redirect('/products');
+  }
+});
+
+module.exports = router;

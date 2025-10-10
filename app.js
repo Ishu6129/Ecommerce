@@ -40,7 +40,11 @@ let configSession=session({
   secret:"thisshould",
   resave:false,
   saveUninitialized:true,
-  // cookie:{secure:true}
+  cookie:{
+    httpOnly:true,
+    expires:Date.now()+7*24*60*60*1000,
+    maxAge:7*24*60*60*1000
+  }
 });
 
 app.engine("ejs", ejsMate);
@@ -53,13 +57,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 
+
 app.use(configSession);
 app.use(flash());
-app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.ono = req.flash("ono");
-  next();
-});
 
 app.use(passport.initialize()); // for using paassport feature
 app.use(passport.session()); // for local storage
@@ -67,28 +67,17 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use((req, res, next) => {
+  res.locals.currentUser=req.user;
+  res.locals.success = req.flash("success");
+  res.locals.ono = req.flash("ono");
+  next();
+});
+
+
 
 app.get("/", (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Ecommerce Home</title>
-        <link rel="stylesheet" href="/styles.css" />
-    </head>
-    <body>
-      <div class="container">
-        <h1>Home</h1>
-        <p>See All Products: <a href="/products">Products</a></p>
-      </div>
-      <footer style="position:fixed; bottom:10px; right:15px; color:grey; font-size:14px;">
-        Made by Ishu Agrawal
-      </footer>
-    </body>
-    </html>
-  `);
+  res.redirect("/login");
 });
 
 

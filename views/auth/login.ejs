@@ -4,8 +4,8 @@
 <div class="row">
   <div class="col-md-6 mx-auto">
     <%- include('../partials/flash') %>
-    <h1 class="display-6 mb-4">Login</h1>
-    <form action="/register" method="POST">
+    <h1 class="display-6 mb-4 mt-4">Login</h1>
+    <form action="/login" method="POST">
       <div class="mb-3">
         <label class="form-label" for="username">Username:</label>
         <input class="form-control" type="text" name="username" id="username" required>
@@ -14,7 +14,8 @@
         <label class="form-label" for="password">Password:</label>
         <input class="form-control" type="password" name="password" id="password" required>
       </div>
-        <button type="submit" class="btn btn-sm btn-success">Sign up</button>
+        <button type="submit" class="btn btn-sm btn-success">Login</button>
+        <p class="fw-light mt-2">Don't have an Account, <a href="/register">Sign Up</a> </p>
     </form>
   </div>
 </div>

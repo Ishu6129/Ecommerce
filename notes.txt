@@ -31,5 +31,17 @@ Locals : If we have to repeat again and again so we store in it and can directly
 passport hashing 
       Strategy used : passport-local
       technique used - passport-local-mongoose (for hashing)
+      passport → Authentication middleware for Node.js.
+
+      passport → Authentication middleware for Node.js.
+            Handles login, sessions, and strategies (like local, OAuth, JWT).
+      passport-local → Strategy for username/password login.
+            Defines how to check a user’s credentials locally (without third-party OAuth).
+      passport-local-mongoose → Mongoose plugin that simplifies username/password management.
+            Automatically adds hashing, salting, authentication methods to your Mongoose User model.
+      Provides methods like:
+            User.register(user, password) → Creates a new user with hashed password.
+            User.authenticate() → Returns a function Passport can use to check credentials.
+            User.serializeUser() / User.deserializeUser() → Methods for storing user info in session.
 
 Static Methods - directly apply on scchema

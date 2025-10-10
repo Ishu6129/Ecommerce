@@ -18,7 +18,16 @@ const validateReview = (req, res, next) => {
     next();
 };
 
+const isLoggedIn = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        req.flash('ono', 'You must be signed in first!');
+        return res.redirect('/login');
+    }
+    next();
+};
+
 module.exports = {
     validateProduct,
-    validateReview
+    validateReview,
+    isLoggedIn
 };
