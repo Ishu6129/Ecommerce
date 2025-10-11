@@ -5,20 +5,37 @@
 
 <div class="row">
 
-    <%for(let item of products){%>
+    <% for(let item of products){ %>
+    <% if (currentUser && currentUser.role === 'seller' && currentUser._id.equals(item.author)){ %>
         <div class="col-md-3 mt-3 ">
-           <div class="card mx-auto" style="width: 18rem; box-shadow: 0 5px 0px black">
+            <div class="card mx-auto" style="width: 18rem; box-shadow: 0 5px 0px black">
                 <img class="card-img-top" src="<%=item.image%>" alt="">
                 <div class="card-body">
                     <h5 class="card-title"><%=item.name%></h5>
                     <h5 class="card-title"><%=item.price%></h5>
                     <p class="card-text"><%=item.description%></p>
                     <a href="/product/<%=item._id%>" class="btn btn-info">view</a>
+                    <% if(currentUser && currentUser.role === 'seller'){ %>
                     <form action="/products/<%=item._id%>?_method=DELETE" method="POST" class="d-inline">
                         <button class="btn btn-danger">Delete</button>
                     </form>
+                    <% } %>
                 </div>
             </div>
         </div>
-    <%}%>
+    <% } else if (!currentUser || currentUser.role === 'buyer') { %>
+        <div class="col-md-3 mt-3 ">
+            <div class="card mx-auto" style="width: 18rem; box-shadow: 0 5px 0px black">
+                <img class="card-img-top" src="<%=item.image%>" alt="">
+                <div class="card-body">
+                    <h5 class="card-title"><%=item.name%></h5>
+                    <h5 class="card-title"><%=item.price%></h5>
+                    <p class="card-text"><%=item.description%></p>
+                    <a href="/product/<%=item._id%>" class="btn btn-info">view</a>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <% } %>
+
 </div>

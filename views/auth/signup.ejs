@@ -15,11 +15,23 @@
         <input class="form-control" type="email" name="email" id="email" required>
       </div>
       <div class="mb-3">
+        <p class="mb-3">Register As : </p>
+          <div class="mx-2">
+            <label class="form-label" for="buyer">Buyer :</label>
+            <input class="form-check-input" type="radio" name="role" id="buyer" value="buyer" checked>
+          </div>
+          <div class="mx-2">
+            <label class="form-label" for="seller">Seller :</label>
+            <input class="form-check-input" type="radio" name="role" id="seller" value="seller">
+          </div>
+        
+      </div>
+      <div class="mb-3">
         <label class="form-label" for="password">Password:</label>
         <input class="form-control" type="password" name="password" id="password" required>
       </div>
         <button type="submit" class="btn btn-sm btn-success">Sign up</button>
-        <p class="fw-light mt-2">Already a Member <a href="/login">Login</a> </p>
+        <p class="fw-light mt-2">Already a Member? <a href="/login">Login</a> </p>
     </form>
   </div>
 </div>

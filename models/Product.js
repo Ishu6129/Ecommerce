@@ -26,7 +26,11 @@ const productSchema=new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:"Review"
         }
-    ]
+    ],
+    author:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    }
 });
 
 // middleware operation when method called on model

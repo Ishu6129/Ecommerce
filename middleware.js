@@ -1,4 +1,5 @@
 const { productSchema, reviewSchema } = require('./schemas.js');
+const Product = require('./models/Product');
 
 const validateProduct = (req, res, next) => {
     const { name, price, image, description } = req.body;
@@ -26,8 +27,32 @@ const isLoggedIn = (req, res, next) => {
     next();
 };
 
+const isSeller=(req,res,next)=>{
+    if(!req.user.role){
+        req.flash('ono', 'You do not have the permission to do that');
+        return res.redirect('/products');
+    }
+    else if(req.user.role!=="seller"){
+        req.flash('ono', 'You do not have the permission to do that');
+        return res.redirect('/products');
+    }
+    next();
+}
+
+const isProdAuthor = async (req, res, next) => {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    if (!product.author.equals(req.user._id)) {
+        req.flash('ono', 'You do not have the permission to do that');
+        return res.redirect('/products');
+    }
+    next();
+}
+
 module.exports = {
     validateProduct,
     validateReview,
-    isLoggedIn
+    isLoggedIn,
+    isSeller,
+    isProdAuthor
 };

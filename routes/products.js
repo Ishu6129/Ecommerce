@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();  //Mini instance of express app
 const Product = require('../models/Product');
 const Review = require('../models/Review');
-const {validateProduct,isLoggedIn} = require('../middleware');
+const {validateProduct,isLoggedIn,isSeller, isProdAuthor} = require('../middleware');
 
 // All the routes related to products
-router.get('/products',isLoggedIn,async (req, res) => {
+router.get('/products',async (req, res) => {
     try{
         let products = await Product.find({});
         res.render('products/index', { products});
@@ -26,10 +26,10 @@ router.get('/product/new',isLoggedIn , async (req, res) => {
 });
 
 // Create new product
-router.post('/products',isLoggedIn ,validateProduct, async (req, res) => {
+router.post('/products',isLoggedIn ,validateProduct,isSeller, async (req, res) => {
     try{
         let {name,price,image,description} = req.body;
-        await Product.create({name,price,image,description} );
+        await Product.create({name,price,image,description,author:req.user._id} );
         req.flash("success","product added sucessfully")
         res.redirect('/products');
     }
@@ -63,7 +63,7 @@ router.get('/product/:id/edit',isLoggedIn , async (req, res) => {
 });
 
 // Edit particular product
-router.patch('/products/:id',isLoggedIn ,validateProduct ,async (req, res) => {
+router.patch('/products/:id',isLoggedIn ,validateProduct,isSeller ,async (req, res) => {
     try{
         let {id} = req.params;
         let {name,price,image,description} = req.body;
@@ -77,7 +77,7 @@ router.patch('/products/:id',isLoggedIn ,validateProduct ,async (req, res) => {
 });
 
 // Delete particular product
-router.delete('/products/:id',isLoggedIn , async (req, res) => {
+router.delete('/products/:id',isLoggedIn,isProdAuthor , async (req, res) => {
     try{
         let {id} = req.params;
         const product =await Product.findById(id);

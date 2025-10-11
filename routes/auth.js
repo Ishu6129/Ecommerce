@@ -8,10 +8,11 @@ router.get('/register', (req, res) => {
   res.render('auth/signup');
 });
 
+// creating user
 router.post('/register', async (req, res, next) => {
   try {
-    const { email, username, password } = req.body;
-    const user = new User({ email, username });
+    const { email, username, password,role } = req.body;
+    const user = new User({ email, username,role });
     const newUser = await User.register(user, password);
     req.login(newUser, (err) => {
       if (err) return next(err);
@@ -29,8 +30,8 @@ router.get('/login', (req, res) => {
   res.render('auth/login');
 });
 
-router.post(
-  '/login',
+// userr login
+router.post('/login',
   passport.authenticate('local', {
     failureRedirect: '/login',
     failureFlash: true,

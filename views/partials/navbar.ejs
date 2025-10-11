@@ -9,16 +9,19 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/products">Home</a>
         </li>
+        <% if(currentUser && currentUser.role === 'seller'){ %>
         <li class="nav-item">
           <a class="nav-link active" href="/product/new">New</a>
         </li>
+        <% } %>
       </ul>
 
     <div class="d-flex align-items-center" role="search">
       <% if(!currentUser) {%>
       <a href="/login" class="btn btn-outline-success mx-2">Login</a>
       <%} else{%>
-        <a href="/cart" class="nav-link position-relative mx-2">
+        <a href="#" class="nav-link" style="color: #f2f2f2;">Hello, <%=currentUser.username %></a>
+        <a href="#" class="nav-link position-relative mx-2">
           <i class="fa-solid fa-cart-shopping" style="color: #f2f2f2;"></i>        
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             2
