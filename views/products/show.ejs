@@ -14,7 +14,9 @@
                     <h5 class="card-title"><%=product.price%></h5>
                     <p class="card-text"><%=product.description%></p>
                     <p><b>Reviews :</b> <%=product.reviews.length %></p>
-                    <a href="#" class="btn btn-secondary">Add to Cart</a>
+                    <form action="/user/<%=product._id%>/add" class="d-inline-secondary" method="POST">
+                        <button class="btn btn-secondary">Add to Cart</button>
+                    </form>
                     <a href="#" class="btn btn-success">Buy</a>
                     <% if(currentUser && currentUser.role === 'seller'){ %>
                     <a href="/product/<%=product._id%>/edit" class="btn btn-warning">Edit</a>

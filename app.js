@@ -19,6 +19,7 @@ const User=require('./models/User')
 const productRoutes = require("./routes/products");
 const reviewRoutes = require("./routes/reviews");
 const authRoutes=require("./routes/auth")
+const cartRoutes=require("./routes/cart")
 
 
 // MONGOOSE CONNECTION
@@ -87,7 +88,7 @@ app.get("/", (req, res) => {
 app.use(productRoutes);
 app.use(reviewRoutes);
 app.use(authRoutes);
-
+app.use(cartRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

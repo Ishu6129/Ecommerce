@@ -21,10 +21,10 @@
       <a href="/login" class="btn btn-outline-success mx-2">Login</a>
       <%} else{%>
         <a href="#" class="nav-link" style="color: #f2f2f2;">Hello, <%=currentUser.username %></a>
-        <a href="#" class="nav-link position-relative mx-2">
+        <a href="/user/cart" class="nav-link position-relative mx-2">
           <i class="fa-solid fa-cart-shopping" style="color: #f2f2f2;"></i>        
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            2
+            <%=currentUser.cart.length%>
           </span>
         </a>
         <a href="/logout" class="btn btn-outline-danger mx-2">Logout</a>
