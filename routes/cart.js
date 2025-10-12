@@ -4,12 +4,13 @@ const {isLoggedIn} = require('../middleware');
 const Product=require("../models/Product")
 const User=require("../models/User")
 
-//route to see cart
-router.get("/user/cart", isLoggedIn, async (req, res) => {
-    const user = await User.findById(req.user._id).populate("cart");
-    res.render("cart/cart", { user });
-});
 
+router.get('/user/cart' , isLoggedIn , async(req,res)=>{
+    const user = await User.findById(req.user._id).populate('cart');
+    const totalAmount = user.cart.reduce((sum , curr)=> sum+curr.price , 0)
+    const productInfo = user.cart.map((p)=>p.desc).join(',');
+    res.render('cart/cart' , {user, totalAmount , productInfo });
+})
 
 // adding product to cart
 router.post("/user/:productId/add",isLoggedIn,async (req,res)=>{

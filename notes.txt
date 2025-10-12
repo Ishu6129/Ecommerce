@@ -1,6 +1,6 @@
 Libraries:
       express ejs nodemon mongoose ejs-mate method-override joi cookie-parser express-session connect-flash passport passport-local
-      passport-local-mongoose
+      passport-local-mongoose request jssha
 
 Dummy Data-Seed.js
       For storing initial data

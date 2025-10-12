@@ -1,96 +1,105 @@
+//1. BASIC IMPORTS
+
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
 const path = require("path");
-const ejsMate = require("ejs-mate");
-const methodOverride = require("method-override");
-const seedDB = require("./seed");
-require('dotenv').config();
+require("dotenv").config(); // load environment variables
 
-const session = require('express-session');
-const flash = require('connect-flash');
+//2. DATABASE (MONGOOSE)
 
-const passport =require('passport')
-const LocalStrategy=require('passport-local')
-const User=require('./models/User')
-
-
-
-const productRoutes = require("./routes/products");
-const reviewRoutes = require("./routes/reviews");
-const authRoutes=require("./routes/auth")
-const cartRoutes=require("./routes/cart")
-
-
-// MONGOOSE CONNECTION
+const mongoose = require("mongoose");
 try {
   mongoose.connect(process.env.DB_URL)
-    .then(() => {
-      console.log("Mongodb connected Successfully✅");
-    })
-    .catch((err) => {
-      console.log("Mongodb connection error");    
-      console.log(err);
-    });}
-  catch(e){
-      console.log("Some error occured");
-      console.log(e);
+    .then(() => console.log("✅ MongoDB connected successfully"))
+    .catch((err) => console.log("❌ MongoDB connection error", err));
+} catch (e) {
+  console.log("⚠️ Some error occurred", e);
 }
 
-let configSession=session({
-  secret:"thisshould",
-  resave:false,
-  saveUninitialized:true,
-  cookie:{
-    httpOnly:true,
-    expires:Date.now()+7*24*60*60*1000,
-    maxAge:7*24*60*60*1000
-  }
-});
+//3. VIEW ENGINE + PATHS
 
+const ejsMate = require("ejs-mate");
 app.engine("ejs", ejsMate);
-
-app.set("view engine", "ejs");   
+app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
+
+
+//4. CORE MIDDLEWARE
+
+const methodOverride = require("method-override");
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method')); 
 
-app.use(methodOverride('_method'));
 
+//5. SESSION & FLASH
 
+const session = require("express-session");
+const flash = require("connect-flash");
+
+const configSession = session({
+  secret: "thisshould",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  }
+});
 
 app.use(configSession);
 app.use(flash());
 
-app.use(passport.initialize()); // for using paassport feature
-app.use(passport.session()); // for local storage
+
+//6. PASSPORT (AUTH)
+
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/User");
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
+//7. GLOBAL VARIABLES (locals)
+
 app.use((req, res, next) => {
-  res.locals.currentUser=req.user;
+  res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
-  res.locals.ono = req.flash("ono");
+  res.locals.ono = req.flash("ono"); // your custom message type
   next();
 });
 
 
+//8. ROUTES
 
-app.get("/", (req, res) => {
-  res.redirect("/login");
-});
+const productRoutes = require("./routes/products");
+const reviewRoutes = require("./routes/reviews");
+const authRoutes = require("./routes/auth");
+const cartRoutes = require("./routes/cart");
+const productApi = require('./routes/api/productapi');
+const paymentRoutes = require('./routes/payment');
 
-
-// Seed the database with initial data
-// seedDB();
-
+app.get('/' , (req,res)=>{
+    res.render('home');
+})
+// app.use(seedDB); // optional seeding file if needed
 app.use(productRoutes);
 app.use(reviewRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
+app.use(productApi);
+app.use(paymentRoutes);
 
-const PORT = process.env.PORT || 3000;
+
+//9. SERVER START
+
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server started at port http://localhost:${PORT}`);
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
