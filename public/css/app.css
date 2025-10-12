@@ -1,0 +1,75 @@
+
+:root {
+    --main-color: #0077b6;
+}
+
+/* Space below navbar */
+main {
+    margin-top: 5.5rem;
+}
+.products .card {
+    width: 100%; /* Make card take full column width */
+}
+/* Product Card Images */
+.products .card img {
+    height: 210px;
+    object-fit: cover;
+    padding: 10px;
+}
+
+/* View Button */
+.show-btn {
+    background-color: var(--main-color);
+    color: white;
+}
+.show-btn:hover {
+    color: white;
+}
+
+/* Navbar Brand */
+.navbar-brand {
+    font-family: "Orbitron", sans-serif;
+    letter-spacing: 0.1em;
+}
+
+/* Heading Section */
+#heading {
+    width: 100%;
+    background-color: #e9ecef;
+    padding: 16px;
+    margin: 10px auto;
+    border-radius: 10px;
+    text-shadow: 0px 0px 2px rgba(0,0,0,0.6);
+}
+
+/* Remove focus outline for buttons */
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Footer */
+footer {
+    background-color: var(--main-color);
+}
+
+/* Heart Wishlist Icon */
+.fas.fa-heart {
+    color: red;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 560px) {
+    #heading {
+        width: 75vw;
+    }
+    .reviews-section {
+        width: 90vw;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    #heading {
+        width: 90vw;
+    }
+}

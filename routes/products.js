@@ -11,7 +11,7 @@ router.get('/products',async (req, res) => {
         res.render('products/index', { products});
     }
     catch(e){
-        res.status(500).render('products/error', {error: e.message});
+        res.status(500).render('error', {error: e.message});
     }
 });
 
@@ -21,7 +21,7 @@ router.get('/product/new',isLoggedIn , async (req, res) => {
         res.render('products/new');
     }
     catch(e){
-        res.status(500).render('products/error', {error: e.message});
+        res.status(500).render('error', {error: e.message});
     }
 });
 
@@ -34,7 +34,7 @@ router.post('/products',isLoggedIn ,validateProduct,isSeller, async (req, res) =
         res.redirect('/products');
     }
     catch(e){
-        res.status(500).render('products/error', {error: e.message});
+        res.status(500).render('error', {error: e.message});
     }
 });
 
@@ -46,19 +46,20 @@ router.get('/product/:id',isLoggedIn , async (req, res) => {
         res.render('products/show', { product});
     }
     catch(e){
-        res.status(500).render('products/error', {error: e.message});
+        res.status(500).render('error', {error: e.message});
     }
 });
 
 // Form to edit product
-router.get('/product/:id/edit',isLoggedIn , async (req, res) => {
+router.get('/products/:id/edit',isLoggedIn , async (req, res) => {
     try{
         let {id} = req.params;
         let product = await Product.findById(id);
+        req.flash('success', 'Product Edited Successfully');
         res.render('products/edit', { product });
     }
     catch(e){
-        res.status(500).render('products/error', {error: e.message});
+        res.status(500).render('error', {error: e.message});
     }
 });
 
@@ -72,7 +73,7 @@ router.patch('/products/:id',isLoggedIn ,validateProduct,isSeller ,async (req, r
         res.redirect(`/product/${id}`);
 }
     catch(e){
-        res.status(500).render('products/error', {error: e.message});
+        res.status(500).render('error', {error: e.message});
     }
 });
 
@@ -89,7 +90,7 @@ router.delete('/products/:id',isLoggedIn,isProdAuthor , async (req, res) => {
         res.redirect('/products');
     }
     catch(e){
-        res.status(500).render('products/error', {error: e.message});
+        res.status(500).render('error', {error: e.message});
     }
 });
 

@@ -1,41 +1,84 @@
-<% title = "All Products" %>
+<% title = "Products" %>
 <% layout('layouts/boilerplate') -%>
-<%- include('../partials/navbar') %>
-<%- include('../partials/flash') %>
 
-<div class="row">
+<section class="container">
 
-    <% for(let item of products){ %>
-    <% if (currentUser && currentUser.role === 'seller' && currentUser._id.equals(item.author)){ %>
-        <div class="col-md-3 mt-3 ">
-            <div class="card mx-auto" style="width: 18rem; box-shadow: 0 5px 0px black">
-                <img class="card-img-top" src="<%=item.image%>" alt="">
-                <div class="card-body">
-                    <h5 class="card-title"><%=item.name%></h5>
-                    <h5 class="card-title"><%=item.price%></h5>
-                    <p class="card-text"><%=item.description%></p>
-                    <a href="/product/<%=item._id%>" class="btn btn-info">view</a>
-                    <% if(currentUser && currentUser.role === 'seller'){ %>
-                    <form action="/products/<%=item._id%>?_method=DELETE" method="POST" class="d-inline">
-                        <button class="btn btn-danger">Delete</button>
-                    </form>
-                    <% } %>
-                </div>
+  <%- include('../partials/flash') %>
+
+  <div class="row products">
+    <% for(let product of products) { %>
+      
+      <% if(currentUser && currentUser.role === 'seller' && currentUser._id.equals(product.author)) { %>
+        <!-- Seller: show only own products -->
+        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+          <div class="card shadow-sm mx-auto position-relative w-100">
+            <img src="<%= product.image %>" class="card-img-top" alt="<%= product.name %>">
+            <span class="badge bg-light text-dark position-absolute top-0 start-0 m-2 p-2 rounded">
+              <%= product.avgRating %> &star; | <%= product.reviews.length %>
+            </span>
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                <span><%= product.name %></span> 
+                <span class="btn like-btn" product-id="<%= product._id %>">
+                  <% if(currentUser.wishList.includes(product._id)) { %>
+                    <i class="fas fa-heart"></i>
+                  <% } else { %>
+                    <i class="far fa-heart"></i>
+                  <% } %>
+                </span>
+              </h5>
+              <p class="card-text fw-light"><%= product.description %></p>
+              <p class="text-muted"><%= product.reviews.length ? product.reviews.length + " reviews" : "No reviews" %></p>
+              <h6 class="card-title">
+                <span class="fw-lighter fs-6 text-decoration-line-through">Rs.<%= product.price*2 %></span> 
+                Rs.<%= product.price %>
+                <span class="fw-light fs-6 text-warning">(50% OFF)</span>
+              </h6>
+              <a href="/product/<%= product._id %>" class="btn btn-sm show-btn">View Now</a>
+              <!-- Edit/Delete only for seller -->
+              <a href="/products/<%= product._id %>/edit" class="btn btn-info btn-sm mt-1">Edit</a>
+              <form action="/products/<%= product._id %>?_method=DELETE" method="POST" class="d-inline">
+                <button class="btn btn-danger btn-sm mt-1">Delete</button>
+              </form>
             </div>
+          </div>
         </div>
-    <% } else if (!currentUser || currentUser.role === 'buyer') { %>
-        <div class="col-md-3 mt-3 ">
-            <div class="card mx-auto" style="width: 18rem; box-shadow: 0 5px 0px black">
-                <img class="card-img-top" src="<%=item.image%>" alt="">
-                <div class="card-body">
-                    <h5 class="card-title"><%=item.name%></h5>
-                    <h5 class="card-title"><%=item.price%></h5>
-                    <p class="card-text"><%=item.description%></p>
-                    <a href="/product/<%=item._id%>" class="btn btn-info">view</a>
-                </div>
-            </div>
-        </div>
-    <% } %>
-    <% } %>
 
-</div>
+      <% } else if (!currentUser || currentUser.role === 'buyer') { %>
+        <!-- Buyer or not logged in: show all products -->
+        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+          <div class="card shadow-sm mx-auto position-relative w-100">
+            <img src="<%= product.image %>" class="card-img-top" alt="<%= product.name %>">
+            <span class="badge bg-light text-dark position-absolute top-0 start-0 m-2 p-2 rounded">
+              <%= product.avgRating %> &star; | <%= product.reviews.length %>
+            </span>
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                <span><%= product.name %></span> 
+                <span class="btn like-btn" product-id="<%= product._id %>">
+                  <% if(currentUser && currentUser.wishList.includes(product._id)) { %>
+                    <i class="fas fa-heart"></i>
+                  <% } else { %>
+                    <i class="far fa-heart"></i>
+                  <% } %>
+                </span>
+              </h5>
+              <p class="card-text fw-light"><%= product.description %></p>
+              <p class="text-muted"><%= product.reviews.length ? product.reviews.length + " reviews" : "No reviews" %></p>
+              <h6 class="card-title">
+                <span class="fw-lighter fs-6 text-decoration-line-through">Rs.<%= product.price*2 %></span> 
+                Rs.<%= product.price %>
+                <span class="fw-light fs-6 text-warning">(50% OFF)</span>
+              </h6>
+              <a href="/product/<%= product._id %>" class="btn btn-sm show-btn">View Now</a>
+            </div>
+          </div>
+        </div>
+
+      <% } %>
+    <% } %>
+  </div>
+
+</section>
+
+<script src="/js/common.js"></script>

@@ -44,14 +44,14 @@ router.post('/login',
 
 // LOGOUT
 router.get('/logout', (req, res, next) => {
-  try {
-    ()=>{ req.logOut(); }
+  req.logout(function(err) {
+    if (err) {
+      req.flash('ono', err.message);
+      return res.redirect('/products');
+    }
     req.flash("success","Logged Out Successfully!");
     res.redirect("/login");
-  } catch (e) {
-    req.flash('ono', e.message);
-    res.redirect('/products');
-  }
+  });
 });
 
 module.exports = router;
