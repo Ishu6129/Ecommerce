@@ -88,6 +88,20 @@ const paymentRoutes = require('./routes/payment');
 app.get('/' , (req,res)=>{
     res.render('home');
 })
+
+app.get("/terms", (req, res) => {
+  res.render("terms");
+});
+
+// 🔒 Privacy Policy
+app.get("/privacy", (req, res) => {
+  res.render("privacy-policy");
+});
+
+// 💰 Refund Policy
+app.get("/refund", (req, res) => {
+  res.render("refund-policy");
+});
 // app.use(seedDB); // optional seeding file if needed
 app.use(productRoutes);
 app.use(reviewRoutes);

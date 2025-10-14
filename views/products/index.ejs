@@ -11,12 +11,12 @@
       <% if(currentUser && currentUser.role === 'seller' && currentUser._id.equals(product.author)) { %>
         <!-- Seller: show only own products -->
         <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-          <div class="card shadow-sm mx-auto position-relative w-100">
+          <div class="card shadow-sm mx-auto position-relative w-100 h-100 d-flex flex-column">
             <img src="<%= product.image %>" class="card-img-top" alt="<%= product.name %>">
             <span class="badge bg-light text-dark position-absolute top-0 start-0 m-2 p-2 rounded">
               <%= product.avgRating %> &star; | <%= product.reviews.length %>
             </span>
-            <div class="card-body">
+            <div class="card-body d-flex flex-column">
               <h5 class="card-title d-flex justify-content-between align-items-center">
                 <span><%= product.name %></span> 
                 <span class="btn like-btn" product-id="<%= product._id %>">
@@ -29,17 +29,18 @@
               </h5>
               <p class="card-text fw-light"><%= product.description %></p>
               <p class="text-muted"><%= product.reviews.length ? product.reviews.length + " reviews" : "No reviews" %></p>
-              <h6 class="card-title">
+              <h6 class="card-title mt-auto">
                 <span class="fw-lighter fs-6 text-decoration-line-through">Rs.<%= product.price*2 %></span> 
                 Rs.<%= product.price %>
                 <span class="fw-light fs-6 text-warning">(50% OFF)</span>
               </h6>
-              <a href="/product/<%= product._id %>" class="btn btn-sm show-btn">View Now</a>
-              <!-- Edit/Delete only for seller -->
-              <a href="/products/<%= product._id %>/edit" class="btn btn-info btn-sm mt-1">Edit</a>
-              <form action="/products/<%= product._id %>?_method=DELETE" method="POST" class="d-inline">
-                <button class="btn btn-danger btn-sm mt-1">Delete</button>
-              </form>
+              <div class="mt-2">
+                <a href="/product/<%= product._id %>" class="btn btn-sm show-btn">View Now</a>
+                <a href="/products/<%= product._id %>/edit" class="btn btn-info btn-sm mt-1">Edit</a>
+                <form action="/products/<%= product._id %>?_method=DELETE" method="POST" class="d-inline">
+                  <button class="btn btn-danger btn-sm mt-1">Delete</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -47,12 +48,12 @@
       <% } else if (!currentUser || currentUser.role === 'buyer') { %>
         <!-- Buyer or not logged in: show all products -->
         <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-          <div class="card shadow-sm mx-auto position-relative w-100">
+          <div class="card shadow-sm mx-auto position-relative w-100 h-100 d-flex flex-column">
             <img src="<%= product.image %>" class="card-img-top" alt="<%= product.name %>">
             <span class="badge bg-light text-dark position-absolute top-0 start-0 m-2 p-2 rounded">
               <%= product.avgRating %> &star; | <%= product.reviews.length %>
             </span>
-            <div class="card-body">
+            <div class="card-body d-flex flex-column">
               <h5 class="card-title d-flex justify-content-between align-items-center">
                 <span><%= product.name %></span> 
                 <span class="btn like-btn" product-id="<%= product._id %>">
@@ -65,12 +66,12 @@
               </h5>
               <p class="card-text fw-light"><%= product.description %></p>
               <p class="text-muted"><%= product.reviews.length ? product.reviews.length + " reviews" : "No reviews" %></p>
-              <h6 class="card-title">
+              <h6 class="card-title mt-auto">
                 <span class="fw-lighter fs-6 text-decoration-line-through">Rs.<%= product.price*2 %></span> 
                 Rs.<%= product.price %>
                 <span class="fw-light fs-6 text-warning">(50% OFF)</span>
               </h6>
-              <a href="/product/<%= product._id %>" class="btn btn-sm show-btn">View Now</a>
+              <a href="/product/<%= product._id %>" class="btn btn-sm show-btn mt-2">View Now</a>
             </div>
           </div>
         </div>
